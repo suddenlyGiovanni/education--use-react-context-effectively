@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react'
 
-import logo from './logo.svg';
-import './app.css';
-import { CountDisplay } from "../count-display/count-display";
+import logo from './logo.svg'
+import './app.css'
 
-export function App() {
+import { CountProvider } from '../count-context/count-context'
+import { CountDisplay } from '../count-display/count-display'
+import { CounterControls } from '../counter/counter'
+
+export default memo(function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -22,8 +25,13 @@ export function App() {
         </a>
       </header>
       <body>
-        <CountDisplay/>
+        <CountProvider>
+          <CountDisplay />
+          <CounterControls />
+          <div>WAT</div>
+        </CountProvider>
+          <div>THE FUCK</div>
       </body>
     </div>
-  );
-}
+  )
+})

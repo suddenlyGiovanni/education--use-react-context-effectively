@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { CountStateContext } from "../count-context/count-context";
+import React, { useMemo } from 'react'
+import { useCountState } from '../count-context/count-context'
 export function CountDisplay(): JSX.Element {
-  const count = useContext(CountStateContext);
-  return <div>{count}</div>;
+  const { count } = useCountState()
+  return useMemo(() => <div>{count}</div>, [count])
 }
