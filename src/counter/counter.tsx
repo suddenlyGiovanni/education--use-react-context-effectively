@@ -1,31 +1,19 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { memo } from 'react'
 import { useCountDispatch } from '../count-context/count-context'
 import { useRenderCount } from '../render-count/render-count'
 
 import './counter.css'
 
-export function CounterControls(): JSX.Element {
-  const dispatch = useCountDispatch()
+export const CounterControls = memo(function CounterControls(): JSX.Element {
+  const { decrement, increment, reset } = useCountDispatch()
   const renderCount = useRenderCount()
 
-  const onIncrement = useCallback(() => dispatch({ type: 'increment' }), [
-    dispatch,
-  ])
-
-  const onDecrement = useCallback(() => dispatch({ type: 'decrement' }), [
-    dispatch,
-  ])
-
-  const onReset = useCallback(() => dispatch({ type: 'reset' }), [dispatch])
-
-  return useMemo(() => {
-    return (
-      <div className="CounterControls">
-        renders: {renderCount}
-        <button onClick={onIncrement}>increment</button>
-        <button onClick={onDecrement}>decrement</button>
-        <button onClick={onReset}>reset</button>
-      </div>
-    )
-  }, [renderCount, onIncrement, onDecrement, onReset])
-}
+  return (
+    <div className="CounterControls">
+      renders: {renderCount}
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+      <button onClick={reset}>0</button>
+    </div>
+  )
+})

@@ -15,6 +15,7 @@ export default function App() {
   return (
     <div className="App">
       <main>
+        <h1>How to optimize your context value</h1>
         <span className="App-renders">renders: </span>
         {renderCount}
         <button onClick={forceRefresh}>force render</button>

@@ -1,5 +1,6 @@
 import React, {
   useReducer,
+  useCallback,
   createContext,
   ReactNode,
   ReactElement,
@@ -60,19 +61,25 @@ function CountProvider({ children }: { children: ReactNode }): ReactElement {
 function useCountState(): State {
   const context = useContext(CountStateContext)
 
-
   if (context === undefined) {
     throw new Error('useCountState must be used within a CountProvider')
   }
   return context
 }
 
-function useCountDispatch(): Dispatch<Action> {
-  const context = useContext(CountDispatchContext)
-  if (context === undefined) {
+function useCountDispatch() {
+  const dispatch = useContext(CountDispatchContext)
+  if (dispatch === undefined) {
     throw new Error('useCountDispatch must be used within a CountProvider')
   }
-  return context
+  const increment = useCallback(() => dispatch({ type: 'increment' }), [
+    dispatch,
+  ])
+  const decrement = useCallback(() => dispatch({ type: 'decrement' }), [
+    dispatch,
+  ])
+  const reset = useCallback(() => dispatch({ type: 'reset' }), [dispatch])
+  return { increment, decrement, reset }
 }
 
 export { CountProvider, useCountState, useCountDispatch }
